@@ -116,8 +116,8 @@ async function main() {
     await cdp('Page.enable');
     await cdp('Emulation.setDeviceMetricsOverride', { width: 1280, height: 720, deviceScaleFactor: 1, mobile: false });
     // E2E_FILE=1 이면 서버 없이 index.html 을 파일로 직접 연다(더블클릭 실행과 같은 조건)
-    const pageUrl = process.env.E2E_FILE ? require('url').pathToFileURL(path.join(ROOT, 'index.html')).href : `http://127.0.0.1:${PORT}/index.html`;
-    console.log('열기: ' + (process.env.E2E_FILE ? '파일 직접 열기 (file://)' : '웹 서버 (http://)'));
+    const pageUrl = process.env.E2E_URL ? process.env.E2E_URL : process.env.E2E_FILE ? require('url').pathToFileURL(path.join(ROOT, 'index.html')).href : `http://127.0.0.1:${PORT}/index.html`;
+    console.log('열기: ' + (process.env.E2E_URL ? process.env.E2E_URL + ' (공개 주소)' : process.env.E2E_FILE ? '파일 직접 열기 (file://)' : '웹 서버 (http://)'));
     await cdp('Page.navigate', { url: pageUrl });
 
     console.log('화면 흐름');
