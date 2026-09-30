@@ -1,0 +1,106 @@
+// 화면에 보이는 문구를 한곳에 모았다. 전공 용어는 쓰지 않는다. (English를 추가할 때 이 파일만 복제하면 된다)
+(function () {
+  const B = (globalThis.Bakery = globalThis.Bakery || {});
+
+  const won = (n) => Math.round(n).toLocaleString('en-US') + '원';
+  const sign = (n) => (n >= 0 ? '+' : '-') + Math.abs(Math.round(n)).toLocaleString('en-US') + '원';
+
+  B.strings = {
+    won,
+    sign,
+    title: '빵집 시뮬레이터',
+    subtitle: '7일 동안 가장 많이 벌어 보세요',
+    pressStart: 'Enter 를 눌러 시작',
+    best: (v) => (v === null ? '최고 기록 없음' : '최고 기록 ' + won(v)),
+    logDays: (n) => (n > 0 ? '쌓인 손님 기록 ' + n + '일' : '아직 손님 기록이 없어요'),
+    dayOf: (d, total) => d + 1 + '/' + total + '일째',
+    weekday: ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일'],
+    weatherIconFrame: { sunny: 0, cloudy: 1, rain: 2 },
+    // 밤
+    nightHeader: (wd, d, total) => wd + ' 밤 · ' + (d + 1) + '/' + total + '일째',
+    forecast: '내일 예보',
+    forecastEvent: (name) => '소식: ' + name,
+    forecastNone: '특별한 소식 없음',
+    expectedCustomers: (n) => '예상 손님 약 ' + n + '명',
+    noRecord: '기록이 쌓이면 예상해요',
+    askBatches: '몇 판 구울까요?',
+    keysPlan: 'Enter 굽기 · A 자동',
+    ledgerKey: 'L 장부실',
+    perBatch: (cost) => '판당 ' + won(cost),
+    expectedUnits: (n) => '예상 ' + n + '개',
+    unitsPerBatch: (n) => n + '개',
+    planTotal: (cost, left) => '재료비 ' + won(cost) + ' · 남는 돈 ' + won(left),
+    oldStock: (n) => '어제 남은 빵 ' + n + '개 (할인)',
+    baking: (name, i, n) => '굽는 중 · ' + name + ' (' + i + '/' + n + ')',
+    pressSpace: '스페이스 멈추기',
+    quality: { perfect: '완벽!', good: '좋아요', burnt: '탔어요...' },
+    bakeDone: '다 구웠어요',
+    openShop: 'Enter 로 가게 열기',
+    noBatches: '구운 빵이 없어요. 그래도 열까요?',
+    // 낮
+    open: (wd) => wd + ' 영업 중',
+    speedKeys: 'F 빨리감기 · Enter 건너뛰기 · P 멈춤',
+    paused: '일시정지',
+    pausedKeys: 'P 계속하기 · Esc 처음으로',
+    // 저녁
+    evening: (wd) => wd + ' 정산',
+    revenue: '매출',
+    cost: '재료비',
+    profit: '오늘의 순이익',
+    customers: (n, missed) => '손님 ' + n + '명 · 놓친 손님 ' + missed + '명',
+    missedRevenue: (v) => '놓친 매출 ' + won(v),
+    wasted: (n, cost) => '굳어서 버린 빵 ' + n + '개 (' + won(cost) + ')',
+    burnt: (n, cost) => '탄 빵 ' + n + '판 (' + won(cost) + ')',
+    perfectCount: (n) => '완벽하게 구운 빵 ' + n + '판',
+    leftover: (n) => '남은 빵 ' + n + '개 → 내일 할인',
+    forecastHit: '예보가 맞았어요',
+    forecastMiss: '예보가 틀렸어요',
+    nextNight: 'Enter 다음 밤으로',
+    showResult: 'Enter 결과 보기',
+    // 장부실
+    ledger: '장부실 · 손님 기록',
+    ledgerDays: (n) => '쌓인 기록 ' + n + '일',
+    ledgerEmpty: '아직 기록이 없어요. 하루가 끝나면 쌓여요.',
+    byWeather: '날씨별 평균 손님',
+    byWeekday: '요일별 평균 손님',
+    byEvent: '소식별 평균 손님',
+    eventNone: '평범한 날',
+    tomorrow: (n) => '내일 예상 손님 약 ' + n + '명',
+    popularity: '인기 빵 비율',
+    closeKeys: 'L · Esc · Enter 닫기',
+    // 결과
+    resultTitle: '한 주 결과',
+    finalProfit: '7일 순이익',
+    grade: '등급',
+    newBest: '최고 기록 갱신!',
+    bestIs: (v) => '최고 기록 ' + won(v),
+    highlightBest: (wd, v) => '가장 잘 번 날: ' + wd + ' (' + sign(v) + ')',
+    highlightWorst: (wd, missed, waste) => '가장 아쉬운 날: ' + wd + ' (놓친 매출 ' + won(missed) + ', 버린 빵 ' + won(waste) + ')',
+    highlightBread: (name, v) => '효자 빵: ' + name + ' (매출 ' + won(v) + ')',
+    totalWaste: (v) => '버린 빵 총액 ' + won(v),
+    totalMissed: (v) => '놓친 매출 총액 ' + won(v),
+    perfectTotal: (n) => '완벽하게 구운 판 ' + n + '판',
+    again: 'Enter 다시하기',
+    toTitle: 'Esc 처음으로',
+    // 튜토리얼 (첫 판의 처음 2일). 전공 용어 없이 쉬운 말로
+    tutorialTitle: '알려 드려요',
+    tutorialKeys: 'Enter 다음 · Esc 건너뛰기',
+    tutorial: {
+      night1: [
+        '어서 오세요! 밤에 빵을 굽고,\n낮에 팔아요. 7일 동안\n가장 많이 벌어 보세요.',
+        '↑↓ 로 빵을 고르고\n←→ 로 몇 판 구울지 정해요.\n돈이 있는 만큼만 구울 수 있어요.',
+        '굽기를 시작하면 스페이스로\n커서를 멈춰요. 초록이면 완벽!\n더 비싼 프리미엄 빵이 돼요.\n빨강이면 타서 버려요.',
+        '너무 많이 구우면 굳어서 버리고,\n적게 구우면 손님을 놓쳐요.\n예보와 L 장부실을 보고 정해요!',
+      ],
+      day1: ['손님이 진열장 앞에서 고민해요.\n구경만 하면 돼요! 원하는 빵이 없으면\n다른 빵을 사거나 그냥 가요.\nF 빨리감기 · Enter 건너뛰기'],
+      night2: [
+        '안 팔린 빵은 오른쪽 할인존에서\n하루 더 30% 싸게 팔려요.\n그다음 날엔 버려요.',
+        '기록이 쌓이면 "예상 손님"이 나와요.\nL 장부실에서 날씨·요일별\n손님 수를 확인해 보세요!',
+      ],
+    },
+    soundKeys: 'M 소리 · - + 음량',
+    // 게임 오버
+    gameOver: '문을 닫아야 해요',
+    gameOverText: ['빵을 더 팔 수도, 새로 구울 돈도 없어요.', '기록은 남았으니 다음엔 더 잘할 수 있어요!'],
+  };
+})();

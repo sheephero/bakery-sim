@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>빵집 시뮬레이터</title>
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<style>
+  /* 갈무리 글꼴(OFL 라이선스). 파일 경로는 모두 상대경로 */
+  @font-face { font-family: 'Galmuri7';  src: url('assets/fonts/Galmuri7.woff2')  format('woff2'); font-display: block; }
+  @font-face { font-family: 'Galmuri9';  src: url('assets/fonts/Galmuri9.woff2')  format('woff2'); font-display: block; }
+  @font-face { font-family: 'Galmuri11'; src: url('assets/fonts/Galmuri11.woff2') format('woff2'); font-display: block; }
+  html, body { margin: 0; height: 100%; background: #1c1d3b; overflow: hidden; }
+  /* 게임 화면을 가운데에 놓는다. 크기는 main.js 가 정수 배율로 정한다 */
+  #game { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+  #game canvas { image-rendering: pixelated; image-rendering: crisp-edges; display: block; }
+  #msg { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; color: #fff7e8; font: 14px sans-serif; text-align: center; padding: 16px; }
+</style>
+</head>
+<body>
+<div id="game"></div>
+<div id="msg">불러오는 중...</div>
+<noscript>이 게임은 JavaScript 가 필요해요.</noscript>
+
+<!-- 엔진 -->
+<script src="lib/phaser.min.js"></script>
+<!-- 게임 규칙 (화면과 무관한 순수 계산) -->
+<script src="src/palette.js"></script>
+<script src="src/layout.js"></script>
+<script src="src/logic/config.js"></script>
+<script src="src/logic/rng.js"></script>
+<script src="src/logic/weather.js"></script>
+<script src="src/logic/sim.js"></script>
+<script src="src/logic/log.js"></script>
+<script src="src/logic/report.js"></script>
+<!-- 저장·문구·공용 UI -->
+<script src="src/audio/sfx.js"></script>
+<script src="src/storage.js"></script>
+<script src="src/strings.js"></script>
+<script src="src/session.js"></script>
+<script src="src/ui/ui.js"></script>
+<!-- 화면(Scene) -->
+<script src="src/scenes/BootScene.js"></script>
+<script src="src/scenes/TitleScene.js"></script>
+<script src="src/scenes/NightScene.js"></script>
+<script src="src/scenes/LedgerScene.js"></script>
+<script src="src/scenes/DayScene.js"></script>
+<script src="src/scenes/EveningScene.js"></script>
+<script src="src/scenes/EndScenes.js"></script>
+<script src="src/scenes/OverlayScenes.js"></script>
+<script src="src/main.js"></script>
+</body>
+</html>
